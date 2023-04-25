@@ -12,6 +12,8 @@
  */
 
 // Your code goes here...
+const allItems = document.querySelectorAll('.item');
+console.log(allItems);
 
 
 
@@ -23,6 +25,9 @@
  */
 
 // Your code goes here...
+const sortBtn = document.querySelectorAll('.sortBtn');
+
+console.log(sortBtn);
 
 
 
@@ -39,6 +44,40 @@
 
 // Your code goes here...
 
+// const containerItems = Object.values(container.children);
+// const containerItemsArr = [];
+
+// console.log(containerItems);
+
+const sortData = (direction) => {
+
+  const container = document.getElementById('main');
+
+  const allItemsArr = Object.values(allItems)
+  console.log(allItemsArr);
+
+  if (direction === 'asc') {
+
+    allItemsArr.sort((a, b) => {
+      return a.id === b.id ? 0 : (a.id > b.id ? 1 : -1);
+    })
+
+    for (let i = 0; i < allItemsArr.length; i++) {
+      container.appendChild(allItemsArr[i]);
+    }
+
+  } else if (direction === 'desc') {
+
+    allItemsArr.sort((a, b) => {
+      return a.id === b.id ? 0 : (a.id > b.id ? -1 : 1);
+    })
+
+    for (let i = 0; i < allItemsArr.length; i++) {
+      container.appendChild(allItemsArr[i]);
+    }
+  }
+}
+
 
 
 /**
@@ -50,5 +89,9 @@
  */
 
 // Your code goes here...
-
-
+sortBtn.forEach((btn) => {
+  const dataID = btn.dataset.sortdir;
+  btn.addEventListener('click', () => {
+    sortData(dataID);
+  })
+})

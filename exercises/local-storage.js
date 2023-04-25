@@ -38,3 +38,78 @@
  */
 
 // Your code goes here...
+
+const container = document.querySelector('.cardsContainer');
+
+//this func changes box color from white to red and vice versa
+//it contains two additional funcs to add box to LS and remove box from LS
+const changeBackground = (e) => {
+  item = e.target;
+  if (Array.from(item.classList).includes('card')) {
+    if (!item.style.backgroundColor) {
+      addToLS(item.id);
+      item.style.backgroundColor = 'red';
+    } else {
+      removeFromLS(item.id);
+      item.style.backgroundColor = '';
+    }
+  }
+}
+
+container.addEventListener('click', changeBackground);
+
+const data = {
+  items: []
+}
+
+const addToLS = (item) => {
+  if (!data.items.length) {
+    data.items.push(item);  
+    localStorage.setItem("favorites", JSON.stringify(data));
+  }
+
+  if (!data.items.includes(item)) {
+
+    const storageFavsDataRaw = localStorage.getItem('favorites');
+    const updatedData = JSON.parse(storageFavsDataRaw);
+    updatedData.items.push(item)
+    localStorage.setItem("favorites", JSON.stringify(updatedData));
+  }
+
+}
+
+const removeFromLS = (item) => {
+
+  const currentLSRaw = localStorage.getItem('favorites');
+  const updatedLSData = JSON.parse(currentLSRaw);
+
+  if (!updatedLSData.items.length) return
+
+  if (updatedLSData.items.includes(item) && updatedLSData.items.length === 1) {
+    updatedLSData.items.splice(updatedLSData.items.indexOf(item), 1).join(',');
+    data.items.length = 0;
+    updatedLSData.items.length = 0;
+  }
+
+  if (updatedLSData.items.includes(item)) {
+    updatedLSData.items.splice(updatedLSData.items.indexOf(item), 1).join(',');
+  }
+  
+  localStorage.setItem("favorites", JSON.stringify(updatedLSData));
+}
+
+// here we make sure the current box color stays on page reload
+const containerItemsArr = Array.from(container.children);
+
+const LSitems = localStorage.getItem('favorites');
+console.log(LSitems);
+const LSitemsObj = JSON.parse(LSitems);
+console.log(LSitemsObj);
+
+if (LSitems && LSitemsObj.items.length) {
+  for (let elm of containerItemsArr) {
+    if (LSitemsObj.items.includes(elm.id)) {
+      elm.style.backgroundColor = 'red'
+    }
+  }
+}

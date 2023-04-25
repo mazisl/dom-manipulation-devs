@@ -12,6 +12,7 @@
  */
 
 // Your code goes here...
+const allItems = document.querySelectorAll('.item');
 
 
 
@@ -23,6 +24,7 @@
  * */
 
 // Your code goes here
+const main = document.getElementById('main');
 
 
 
@@ -34,6 +36,7 @@
  */
 
 // Your code goes here
+const favs = document.getElementById('favs');
 
 
 
@@ -47,6 +50,31 @@
  */
 
 // Your code goes here
+const updateCollections = (id, direction) => {
+  
+  const params = direction === 'toFavs' ? [main, favs] : [favs, main];
+
+  console.log(params)
+  console.log(params[0])
+  console.log(params[0].children)
+  console.log(Object.values(params[0].children))
+
+  //Object.values turns the HTMLCollection into an array so that map method can be used on it
+  Object.values(params[0].children).map((item) => {
+    if (item.id === id) {
+      item.remove();
+      console.log(item);
+      const iconVal = params[0] === main ? ['fa-heart-circle-plus', 'fa-heart-crack'] : ['fa-heart-crack', 'fa-heart-circle-plus'];
+
+      item.children[0].classList.remove(iconVal[0]);
+      item.children[0].classList.add(iconVal[1]);
+      
+      console.log(item.children)
+      console.log(item.children[0])
+      params[1].appendChild(item);
+    }
+  });
+};
 
 
 
@@ -65,5 +93,10 @@
  */
 
 // Your code goes here...
-
-
+allItems.forEach((item) => {
+  console.log(item)
+  item.addEventListener('click', () => {
+    const direction = item.parentElement.id === 'main' ? 'toFavs' : 'toMain';
+    updateCollections(item.id, direction);
+  });
+});

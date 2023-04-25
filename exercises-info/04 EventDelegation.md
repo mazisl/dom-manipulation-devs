@@ -24,12 +24,12 @@ Imagine this HTML body content with some tiny piece od CSS
     }
   </style>
   <div id="parent" class="container">
-      <div id="1" class="item">1</div>
-      <div id="2" class="item">2</div>
-      <div id="3" class="item">3</div>
-      <div id="4" class="item">4</div>
-      <div id="5" class="item">5</div>
-    </div>
+    <div id="1" class="item">1</div>
+    <div id="2" class="item">2</div>
+    <div id="3" class="item">3</div>
+    <div id="4" class="item">4</div>
+    <div id="5" class="item">5</div>
+  </div>
 </body>
 ```
 
